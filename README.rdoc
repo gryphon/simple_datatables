@@ -1,0 +1,101 @@
+= Simple Datatables
+
+Connects two awesome plugins - Datatables for Jquery and Meta Search together for Rails 3.1
+
+== Install
+
+Due to RC status of 3.1 rails currently you cannot bundle jsonify-rails library.
+Please add the following to your Gemfile to install simple datatables:
+
+  gem 'simple_datatables', :git => "git://github.com/gryphon/simple_datatables.git"
+  gem "jsonify-rails", :git => "git://github.com/gryphon/jsonify-rails.git"
+
+After bundle install add this line to rails 3.1 assets pipeline and restart server:
+
+  //= require simple_datatables
+
+Installation completed.
+
+== Description
+
+There are two ways to map awesome Datatables plugin request fields for Rails.
+
+* First is to convert request on the server side
+* Second is to prepare correct request on the client side  
+
+This gem provides interface for the second way. 
+To use it you should do the following easy three steps:
+
+1. Create simple meta_search and will_paginate controller action as usual and add ".datatables" format
+
+  respond_to :html, :datatables
+  
+  def search
+    @products = Product.search(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page])
+    respond_with @products
+  end
+
+2. Use standard datatables initializer options for creating table:
+
+* bServerSide: true
+* sAjaxSource: path to your controller
+* fnServerData: point to simpleDatatables function
+* aoColumns: you *should* define all searchable/fiterable sName attributes here. Use format as used in meta_search (with underscores) 
+
+3. Create Jsonify view with column values for columns listed in aoColumns. See example for clarification.
+
+This gem uses:
+* meta_search for nice search and sort request syntax mapping
+* will_paginate for nice pagination request syntax mapping
+* jsonify for simple output generation 
+
+Gem works only with rails 3.1.
+
+== Example
+
+The following code will show products list datatables. Manufacturer is belongs_to association for Product.
+
+In your controller:
+
+  respond_to :html, :datatables
+  
+  # GET /products/search
+  def search
+    @products = Product.search(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page])
+    respond_with @products
+  end
+
+In your search view:
+
+  @products.each do |product|
+    json << [product.name, product.manufacturer.name]
+  end
+
+In your index view:
+
+  %table#products
+    %thead
+      %tr
+        %th= Product.human_attribute_name :code
+        %th= Product.human_attribute_name :manufacturer
+        %th= Product.human_attribute_name :name
+  
+    %tbody
+
+
+In your javascript:
+
+  $("products").dataTable($("table#products"), {
+      "sAjaxSource"     : "/products/search.datatables",
+      "aaSorting"       : [[0, 'asc']],
+      "aoColumns"       : [
+        {"sName":"name"},
+        {"sName":"manufacturer_name"},
+      ],
+      "bServerSide"     : true,
+      "fnServerData"    : simpleDatatables
+    });
+
+== Copyright
+
+Copyright (c) Grigory Dmitrenko, 2011. See LICENSE for details.
