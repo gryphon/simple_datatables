@@ -76,9 +76,8 @@ In your index view:
   %table#products
     %thead
       %tr
-        %th= Product.human_attribute_name :code
-        %th= Product.human_attribute_name :manufacturer
         %th= Product.human_attribute_name :name
+        %th= Product.human_attribute_name :manufacturer
   
     %tbody
 
