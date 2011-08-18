@@ -4,11 +4,9 @@ Connects two awesome plugins - Datatables for Jquery and Meta Search together fo
 
 == Install
 
-Due to RC status of 3.1 rails currently you cannot bundle jsonify-rails library.
-Please add the following to your Gemfile to install simple datatables:
+Add the following to your Gemfile to install simple datatables:
 
   gem 'simple_datatables', :git => "git://github.com/gryphon/simple_datatables.git"
-  gem "jsonify-rails", :git => "git://github.com/gryphon/jsonify-rails.git"
 
 After bundle install add this line to rails 3.1 assets pipeline and restart server:
 
