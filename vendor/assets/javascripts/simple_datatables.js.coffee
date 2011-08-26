@@ -5,6 +5,8 @@ root = exports ? this
 root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
       
   columns = [];
+  searchcolumns = [];
+  
   sEcho = 1;
   sSearch = "";
   iDisplayStart = 0;
@@ -12,6 +14,8 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   iSortCol = 0;
   sSortDir = "asc";
   data = [];
+  
+  console.log(aoData);
       
   $.each(aoData, (index, dataObj) -> 
     switch dataObj.name
@@ -35,6 +39,10 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
       data.push({name: "search["+columns[col[1]]+"_contains]", value: dataObj.value});
+
+    search_regexp = ///bSearchable_([0-9]+)///
+    if (col = dataObj.name.match(search_regexp)) and dataObj.value
+      searchcolumns.push(columns[col[1]]);
   );
 
   data.push({name: "sEcho", value: sEcho});
@@ -47,7 +55,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   );
   
   if sSearch
-    data.push({name: "search["+columns.join("_or_")+"_contains]", value: sSearch});
+    data.push({name: "search["+searchcolumns.join("_or_")+"_contains]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
   
