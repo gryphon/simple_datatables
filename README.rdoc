@@ -6,7 +6,7 @@ Connects two awesome plugins - Datatables for Jquery and Meta Search together fo
 
 Add the following to your Gemfile to install simple datatables:
 
-  gem 'simple_datatables', :git => "git://github.com/gryphon/simple_datatables.git"
+  gem 'simple_datatables'
 
 After bundle install add this line to rails 3.1 assets pipeline and restart server:
 
