@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["grigory@snsk.ru"]
   s.homepage    = "http://github.com/gryphon/simple_datatables"
   s.summary     = %q{Simple datatables to rails mapping using meta_search, will_paginage and jsonify}
-  s.description = %q{Simple data preparation from AR/Mongoid to the jQuery DataTables plugin}
+  s.description = %q{Simple datatables to rails mapping using meta_search, will_paginage and jsonify}
 
   s.rubyforge_project = "data_table"
 
