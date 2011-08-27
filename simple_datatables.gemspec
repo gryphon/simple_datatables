@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Grigory"]
   s.email       = ["grigory@snsk.ru"]
-  s.homepage    = "http://rubygems.org/gems/simple_datatables"
+  s.homepage    = "http://github.com/gryphon/simple_datatables"
   s.summary     = %q{Simple datatables to rails mapping using meta_search, will_paginage and jsonify}
   s.description = %q{Simple data preparation from AR/Mongoid to the jQuery DataTables plugin}
 
