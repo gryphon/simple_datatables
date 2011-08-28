@@ -93,6 +93,8 @@ In your javascript:
       "fnServerData"    : simpleDatatables
     });
 
+Note that fulltext search will work only with text fields due to meta_search restrictions. To prevent errors use bSearchable: false for non-text columns in aoColumns field.
+
 == Copyright
 
 Copyright (c) Grigory Dmitrenko, 2011. See LICENSE for details.
