@@ -49,6 +49,8 @@ This gem uses:
 
 Gem works only with rails 3.1.
 
+Gem includes datatables library and fnSetFilteringDelay plugin so you haven't include it by yourself.
+
 == Search for all fields
 
 Note that fulltext search will work only with text fields due to meta_search restrictions. To prevent errors use bSearchable: false for non-text columns in aoColumns field.
