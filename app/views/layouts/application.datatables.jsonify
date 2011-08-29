@@ -5,7 +5,7 @@ instance_variables.each do |vn|
     json.iTotalDisplayRecords v.total_entries
   end
 end
-json.sEcho params["sEcho"]
+json.sEcho params["sEcho"].to_i
 json.aaData do
   json.ingest! yield
 end
