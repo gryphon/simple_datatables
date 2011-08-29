@@ -1,4 +1,5 @@
 //= require jquery.dataTables.min
+//= require jquery.datatables.fnSetFilteringDelay
 
 root = exports ? this
   
@@ -9,13 +10,12 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   
   sEcho = 1;
   sSearch = "";
+  bRegex = false;
   iDisplayStart = 0;
   iDisplayLength = 0;
   iSortCol = 0;
   sSortDir = "asc";
   data = [];
-  
-  console.log(aoData);
       
   $.each(aoData, (index, dataObj) -> 
     switch dataObj.name
@@ -25,6 +25,8 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
         sEcho = dataObj.value;
       when "sSearch"
         sSearch = dataObj.value;
+      when "bRegex"
+        bRegex = dataObj.value;
       when "iDisplayStart"
         iDisplayStart = dataObj.value;
       when "iDisplayLength"
@@ -38,11 +40,12 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(aoData, (index, dataObj) -> 
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      data.push({name: "search["+columns[col[1]]+"_contains]", value: dataObj.value});
+      data.push({name: "search["+columns[col[1]]+"_sw"+"]", value: dataObj.value});
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
       searchcolumns.push(columns[col[1]]);
+
   );
 
   data.push({name: "sEcho", value: sEcho});
@@ -55,7 +58,12 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   );
   
   if sSearch
-    data.push({name: "search["+searchcolumns.join("_or_")+"_contains]", value: sSearch});
+    op =
+    if bRegex
+      "_contains"
+    else
+      "_sw"
+    data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
   

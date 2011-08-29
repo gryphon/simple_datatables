@@ -49,6 +49,20 @@ This gem uses:
 
 Gem works only with rails 3.1.
 
+== Search for all fields
+
+Note that fulltext search will work only with text fields due to meta_search restrictions. To prevent errors use bSearchable: false for non-text columns in aoColumns field.
+
+== Regex search
+
+Due to meta_search restrictions it is impossible to use regex search for now.
+
+Instead, this gem recognizes bSearch flag as "contains" meta_search finder.
+
+By default "starts_with" is used due to database performance reasons.
+
+Independent fields search will always search using "starts_with" finder.
+
 == Example
 
 The following code will show products list datatables. Manufacturer is belongs_to association for Product.
@@ -92,8 +106,6 @@ In your javascript:
       "bServerSide"     : true,
       "fnServerData"    : simpleDatatables
     });
-
-Note that fulltext search will work only with text fields due to meta_search restrictions. To prevent errors use bSearchable: false for non-text columns in aoColumns field.
 
 == Copyright
 
