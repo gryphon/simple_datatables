@@ -8,7 +8,6 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   columns = [];
   searchcolumns = [];
   sortcolumns = [];
-  sortdirs = [];
   
   sEcho = 1;
   sSearch = "";
