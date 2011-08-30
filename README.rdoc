@@ -8,14 +8,6 @@ Add the following to your Gemfile to install simple datatables:
 
   gem 'simple_datatables'
 
-Also you should have the following gems bundled to provide API actions:
-
-  gem 'will_paginate', "~>3.0.0"
-  gem "meta_search", '~>1.1.0.pre2'
-  gem "jsonify-rails"
-
-This is done such way because usually develoers use these gems for other purposes in their applications.
-
 After bundle install add this line to rails 3.1 assets pipeline and restart server:
 
   //= require simple_datatables
