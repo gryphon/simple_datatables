@@ -1,7 +1,7 @@
 instance_variables.each do |vn|
   v = instance_variable_get(vn)
-  if v.class==WillPaginate::Collection
-    json.iTotalRecords v.count
+  if v.respond_to?('total_entries')
+    json.iTotalRecords v.size
     json.iTotalDisplayRecords v.total_entries
   end
 end
