@@ -24,7 +24,7 @@ There are two ways to map awesome Datatables plugin request fields for Rails.
 This gem provides interface for the second way. 
 To use it you should do the following easy three steps:
 
-Create simple meta_search and will_paginate controller action as usual and add ".datatables" format
+Create simple meta_search and will_paginate (optionally) controller action as usual and add ".datatables" format
 
   respond_to :html, :datatables
   
@@ -44,12 +44,20 @@ Create Jsonify view with column values for columns listed in aoColumns. See exam
 
 This gem uses:
 * meta_search for nice search and sort request syntax mapping
-* will_paginate for nice pagination request syntax mapping
+* will_paginate optionally for nice pagination request syntax mapping
 * jsonify for simple output generation 
 
 Gem works only with rails 3.1.
 
 Gem includes datatables library and fnSetFilteringDelay plugin so you haven't include it by yourself.
+
+== Pagination
+
+Simple_datatables is compatible with will_paginate. Datatables will provide you "page" and "per_page" request params.
+
+If you do not use pagination do not forget to save search result to some variable with meta_search relation method:
+
+  @products = Product.search(params[:search]).relation
 
 == Search for all fields
 

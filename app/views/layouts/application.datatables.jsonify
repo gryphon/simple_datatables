@@ -1,10 +1,29 @@
+total_entries = nil
+current_page_entries = 0
+
 instance_variables.each do |vn|
   v = instance_variable_get(vn)
+  next if v.class.name.nil?
+  if v.class.name.start_with?("MetaSearch::Searches") and v.respond_to?('size')
+    current_page_entries = v.size
+  end
+  if v.class.name.start_with?("ActiveRecord::Relation") and v.respond_to?('size')
+    current_page_entries = v.size
+  end
+  if v.class.name.start_with?("Array") and v.respond_to?('size') and (current_page_entries == 0)
+    current_page_entries = v.size
+  end
   if v.respond_to?('total_entries')
-    json.iTotalRecords v.size
-    json.iTotalDisplayRecords v.total_entries
+    total_entries = v.total_entries
+    current_page_entries = v.size
+    break
   end
 end
+
+total_entries = current_page_entries if total_entries.nil?
+
+json.iTotalRecords current_page_entries
+json.iTotalDisplayRecords total_entries
 json.sEcho params["sEcho"].to_i
 json.aaData do
   json.ingest! yield
