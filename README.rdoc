@@ -44,8 +44,10 @@ Create Jsonify view with column values for columns listed in aoColumns. See exam
 
 This gem uses:
 * meta_search for nice search and sort request syntax mapping
-* will_paginate optionally for nice pagination request syntax mapping
 * jsonify for simple output generation 
+
+This gem provides integration with:
+* will_paginate for nice pagination request syntax mapping
 
 Gem works only with rails 3.1.
 
