@@ -13,6 +13,12 @@ instance_variables.each do |vn|
   if v.class.name.start_with?("Array") and v.respond_to?('size') and (current_page_entries == 0)
     current_page_entries = v.size
   end
+
+  # Mongoid...
+  if v.class.name.start_with?("Mongoid::Criteria")
+    total_entries = v.length
+  end
+
   if v.respond_to?('total_entries')
     total_entries = v.total_entries
     current_page_entries = v.size
