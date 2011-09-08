@@ -14,7 +14,7 @@ instance_variables.each do |vn|
     current_page_entries = v.size
   end
 
-  if v.class.name.start_with("Mongoid::Criteria") and v.respond_to?('length')
+  if v.class.name.start_with?("Mongoid::Criteria")
 	total_entries = v.length
 	break;
   end
