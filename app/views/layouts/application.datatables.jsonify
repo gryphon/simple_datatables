@@ -15,8 +15,8 @@ instance_variables.each do |vn|
   end
 
   if v.class.name.start_with?("Mongoid::Criteria")
-	total_entries = v.length
-	break;
+    total_entries = v.length
+    break;
   end
 
   if v.respond_to?('total_entries')
