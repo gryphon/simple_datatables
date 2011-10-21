@@ -1,8 +1,13 @@
 total_entries = nil
 current_page_entries = 0
+collection ||= nil
 
 instance_variables.each do |vn|
   v = instance_variable_get(vn)
+  
+  # if a collection variable was specified, use it only
+  next if collection && collection != v
+  
   next if v.class.name.nil?
   if v.class.name.start_with?("MetaSearch::Searches") and v.respond_to?('size')
     current_page_entries = v.size
