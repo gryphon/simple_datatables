@@ -4,13 +4,13 @@ current_page_entries = 0
 instance_variables.each do |vn|
   v = instance_variable_get(vn)
   next if v.class.name.nil?
-  if v.class.name.start_with?("MetaSearch::Searches") and v.respond_to?('size')
+  if v.class.name.start_with?("MetaSearch::Searches") and v.respond_to?('total_count')
     current_page_entries = v.total_count
   end
-  if v.class.name.start_with?("ActiveRecord::Relation") and v.respond_to?('size')
+  if v.class.name.start_with?("ActiveRecord::Relation") and v.respond_to?('total_count')
     current_page_entries = v.total_count
   end
-  if v.class.name.start_with?("Array") and v.respond_to?('size') and (current_page_entries == 0)
+  if v.class.name.start_with?("Array") and v.respond_to?('total_count') and (current_page_entries == 0)
     current_page_entries = v.total_count
   end
 
