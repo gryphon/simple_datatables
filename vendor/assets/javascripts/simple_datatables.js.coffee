@@ -66,7 +66,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(columns, (index, val) -> 
     data.push({name: "columns["+index+"]", value: val});
   );
-  
+
   if sSearch
     op =
     if bRegex
