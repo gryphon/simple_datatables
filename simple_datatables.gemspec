@@ -20,6 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 3.1.0"
   s.add_dependency "meta_search", '~> 1.1.0'
   s.add_dependency "jsonify-rails"
-  s.add_dependency "kaminari"
-
 end
