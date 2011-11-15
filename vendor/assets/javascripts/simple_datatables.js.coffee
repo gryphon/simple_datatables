@@ -76,4 +76,3 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
-  
