@@ -19,8 +19,8 @@ instance_variables.each do |vn|
     break;
   end
 
-  if v.respond_to?('total_entries')
-    total_entries = v.total_entries
+  if v.respond_to?('size')
+    total_entries = v.size
     current_page_entries = v.total_count
     break
   end
