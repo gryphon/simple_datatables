@@ -23,10 +23,6 @@ instance_variables.each do |vn|
     total_entries = v.total_count
     current_page_entries = v.size
     break
-  elsif v.respond_to?('total_entries')
-    total_entries = v.total_entries
-    current_page_entries = v.size
-    break
   end
 end
 
