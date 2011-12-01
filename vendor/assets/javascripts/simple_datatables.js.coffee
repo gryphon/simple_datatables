@@ -1,5 +1,6 @@
 //= require jquery.dataTables
 //= require jquery.datatables.fnSetFilteringDelay
+//= require jquery.datatables.fnReloadAjax
 
 root = exports ? this
   
