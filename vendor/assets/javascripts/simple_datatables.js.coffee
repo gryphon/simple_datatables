@@ -45,7 +45,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
       search_value = dataObj.value.split('/')
       console.log search_value
-      data.push({name: "search["+columns[col[1]] + search_value[1] + "]", value: searc_value[0] });
+      data.push({name: "search["+columns[col[1]] + search_value[1] + "]", value: search_value[0] });
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
