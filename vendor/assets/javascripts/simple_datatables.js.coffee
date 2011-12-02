@@ -69,7 +69,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   );
 
   if sSearch
-    console.log sSearch
+    alert sSearch
     op =
       if bRegex
         "_contains"
