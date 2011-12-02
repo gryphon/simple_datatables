@@ -43,8 +43,8 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(aoData, (index, dataObj) -> 
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      console.log dataObj
-      data.push({name: "search["+columns[col[1]]+"]", value: dataObj.value});
+      search_value = dataObj.split('|')
+      data.push({name: "search["+columns[col[1]]+ search_value[1] +"]", value: searc_value[0]});
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
