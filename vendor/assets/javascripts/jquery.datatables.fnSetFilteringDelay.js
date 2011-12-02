@@ -23,7 +23,7 @@ jQuery.fn.dataTableExt.oApi.fnSetFilteringDelay = function ( oSettings, iDelay )
   var $this = this, oTimerId;
 
   // Unfortunately there is no nFilter inside oSettings.
-  var anControl = $( 'div.dataTables_filter input:text' );
+  var anControl = $( 'input:text' );
 
   anControl.unbind( 'keyup' ).bind( 'keyup', function() {
 
