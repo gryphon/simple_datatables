@@ -1,30 +1,40 @@
 jQuery.fn.dataTableExt.oApi.fnSetFilteringDelay = function ( oSettings, iDelay ) {
-        var _that = this;
-        this.each( function ( i ) {
-                $.fn.dataTableExt.iApiIndex = i;
-                iDelay  = (iDelay && (/^[0-9]+$/.test(iDelay))) ? iDelay : 250;
-                
-                var $this = this, oTimerId;
-                var anControl = $( 'input', _that.fnSettings().aanFeatures.f );
-                
-                anControl.unbind( 'keyup' ).bind( 'keyup', function(event) {
-                        window.clearTimeout(oTimerId);
-                        
-                        if (event.keyCode == '13') {
-                                // cr, we filter immedately
-                                $.fn.dataTableExt.iApiIndex = i;
-                                _that.fnFilter( $(this).val() );
-                        } else {
-                                // not cr, set new timer
-                                oTimerId = window.setTimeout(function() {
-                                        $.fn.dataTableExt.iApiIndex = i;
-                                        _that.fnFilter( $(this).val() );
-                                }, iDelay);
-                        }
-                        
-                });
-                
-                return this;
-        } );
-        return this;
-};
+
+ /*
+  * Type:        Plugin for DataTables (www.datatables.net) JQuery plugin.
+  * Name:        dataTableExt.oApi.fnSetFilteringDelay
+  * Version:     1.0.0
+  * Description: Enables filtration delay for keeping the browser more
+  *              responsive while searching for a longer keyword.
+  * Inputs:      object:oSettings - dataTables settings object
+  *              integer:iDelay - delay in miliseconds
+  * Returns:     JQuery
+  * Usage:       $('#example').dataTable().fnSetFilteringDelay(250);
+  *
+  * Author:      Zygimantas Berziunas (www.zygimantas.com)
+  * Created:     7/3/2009
+  * Language:    Javascript
+  * License:     GPL v2 or BSD 3 point style
+  * Contact:     zygimantas.berziunas@hotmail.com
+  */
+
+  iDelay  = (iDelay && (/^[0-9]+$/.test(iDelay))) ? iDelay : 250; 
+
+  var $this = this, oTimerId;
+
+  // Unfortunately there is no nFilter inside oSettings.
+  var anControl = $( 'div.dataTables_filter input:text' );
+
+  anControl.unbind( 'keyup' ).bind( 'keyup', function() {
+
+    var $$this = $this;
+    window.clearTimeout(oTimerId);
+
+    oTimerId = window.setTimeout(function() {
+
+      $$this.fnFilter( anControl.val() );
+    }, iDelay);
+  });
+
+  return this;
+}
