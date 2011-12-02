@@ -1,4 +1,6 @@
-= Simple Datatables
+= Simple Datatables for Kaminari
+
+This fork works with kaminari gem!
 
 Connects two awesome plugins - Datatables for Jquery and Meta Search together for Rails 3.1
 
@@ -24,12 +26,12 @@ There are two ways to map awesome Datatables plugin request fields for Rails.
 This gem provides interface for the second way. 
 To use it you should do the following easy three steps:
 
-Create simple meta_search and will_paginate (optionally) controller action as usual and add ".datatables" format
+Create simple meta_search and kaminari (optionally) controller action as usual and add ".datatables" format
 
   respond_to :html, :datatables
   
   def search
-    @products = Product.search(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page])
+    @products = Product.search(params[:search]).page(params[:page]).per(params[:per_page])
     respond_with @products
   end
 
@@ -55,7 +57,7 @@ Gem includes datatables library and fnSetFilteringDelay plugin so you haven't in
 
 == Pagination
 
-Simple_datatables is compatible with will_paginate. Datatables will provide you "page" and "per_page" request params.
+Simple_datatables is compatible with Kaminari. Datatables will provide you "page" and "per_page" request params.
 
 If you do not use pagination do not forget to save search result to some variable with meta_search relation method:
 

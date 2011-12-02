@@ -1,5 +1,6 @@
-//= require jquery.dataTables.min
+//= require jquery.dataTables
 //= require jquery.datatables.fnSetFilteringDelay
+//= require jquery.datatables.fnReloadAjax
 
 root = exports ? this
   
@@ -42,15 +43,18 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(aoData, (index, dataObj) -> 
     search_regexp = ///sSearch_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      data.push({name: "search["+columns[col[1]]+"_sw"+"]", value: dataObj.value});
+      search_method = columns[col[1]].split('--') 
+      data.push({name: "search[" + search_method[0] + '_' + search_method[1] + "]", value: dataObj.value });
 
     search_regexp = ///bSearchable_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
-      searchcolumns.push(columns[col[1]]);
+      search_method = columns[col[1]].split('--') 
+      searchcolumns.push(search_method[0]);
 
     search_regexp = ///iSortCol_([0-9]+)///
     if (col = dataObj.name.match(search_regexp))
-      sortcolumns[parseInt(col[1])]=columns[parseInt(dataObj.value)];
+      sort_method = columns[parseInt(dataObj.value)].split('--') 
+      sortcolumns[parseInt(col[1])] = sort_method[0]
 
     search_regexp = ///sSortDir_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
@@ -66,14 +70,13 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   $.each(columns, (index, val) -> 
     data.push({name: "columns["+index+"]", value: val});
   );
-  
+
   if sSearch
     op =
-    if bRegex
-      "_contains"
-    else
-      "_sw"
+      if bRegex
+        "_contains"
+      else
+        "_sw"
     data.push({name: "search["+searchcolumns.join("_or_")+op+"]", value: sSearch});
 
   $.ajax( { "dataType": 'json', "type": "GET", "url": sSource, "data": data, "success": fnCallback } );
-  

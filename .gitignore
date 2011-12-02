@@ -2,3 +2,8 @@ pkg/*
 *.gem
 .bundle
 *.swp
+
+vendor/assets/javascripts/.DS_Store
+.DS_Store
+vendor/.DS_Store
+vendor/assets/.DS_Store
