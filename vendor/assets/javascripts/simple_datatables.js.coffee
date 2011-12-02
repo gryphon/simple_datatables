@@ -1,7 +1,6 @@
 //= require jquery.dataTables
 //= require jquery.datatables.fnSetFilteringDelay
 //= require jquery.datatables.fnReloadAjax
-//= require jquery.dataTables.rowGrouping
 
 root = exports ? this
   
@@ -70,6 +69,7 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
   );
 
   if sSearch
+    console.log sSearch
     op =
       if bRegex
         "_contains"
