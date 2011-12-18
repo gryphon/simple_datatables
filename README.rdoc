@@ -93,7 +93,7 @@ If you are getting strange results (for instance, iTotalRecords and iTotalDispla
 
   respond_with @products, :locals => {:collection => @products}
 
-In your search view:
+In your search view (app/views/products/search.jsonify):
 
   @products.each do |product|
     json << [product.name, product.manufacturer.name]
@@ -112,7 +112,7 @@ In your index view:
 
 In your javascript:
 
-  $("products").dataTable($("table#products"), {
+  $("#products").dataTable({
       "sAjaxSource"     : "/products/search.datatables",
       "aaSorting"       : [[0, 'asc']],
       "aoColumns"       : [
