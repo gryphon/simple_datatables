@@ -1,36 +1,31 @@
-total_entries = nil
-current_page_entries = 0
+total_entries ||= nil
+current_page_entries ||= 0
 collection ||= nil
 
-instance_variables.each do |vn|
-  v = instance_variable_get(vn)
-  
-  # if a collection variable was specified, use it only
-  next if collection && collection != v
-  
-  next if v.class.name.nil?
-  if v.class.name.start_with?("MetaSearch::Searches") and v.respond_to?('size')
-    current_page_entries = v.size
-  end
-  if v.class.name.start_with?("ActiveRecord::Relation") and v.respond_to?('size')
-    current_page_entries = v.size
-  end
-  if v.class.name.start_with?("Array") and v.respond_to?('size') and (current_page_entries == 0)
-    current_page_entries = v.size
-  end
+# looking for the right collection if not initiated via parameter
 
-  if v.class.name.start_with?("Mongoid::Criteria")
-    total_entries = v.length
-    break;
-  end
+if collection.nil?
+  instance_variables.each do |vn|
 
-  if v.respond_to?('total_entries')
-    total_entries = v.total_entries
-    current_page_entries = v.size
-    break
+    v = instance_variable_get(vn)
+  
+    # if a collection variable was specified, use it only
+    next if collection && collection != v
+    next if v.class.name.nil?
+
+    collection = v if v.class.name.start_with?("MetaSearch::Searches", "ActiveRecord::Relation")
+
   end
 end
 
+# receiving correct current page entries count
+current_page_entries = v.size if collection.respond_to?('size')
+
+# looking for the total entries count
+total_entries = v.length if collection.class.name.start_with?("Mongoid::Criteria")
+total_entries = v.total_entries if v.respond_to?('total_entries')
+
+# fallback to 1 page if total entries count not found
 total_entries = current_page_entries if total_entries.nil?
 
 json.iTotalRecords current_page_entries
