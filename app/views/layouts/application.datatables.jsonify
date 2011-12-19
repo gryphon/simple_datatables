@@ -19,11 +19,11 @@ if collection.nil?
 end
 
 # receiving correct current page entries count
-current_page_entries = v.size if collection.respond_to?('size')
+current_page_entries = collection.size if collection.respond_to?('size')
 
 # looking for the total entries count
-total_entries = v.length if collection.class.name.start_with?("Mongoid::Criteria")
-total_entries = v.total_entries if v.respond_to?('total_entries')
+total_entries = collection.length if collection.class.name.start_with?("Mongoid::Criteria")
+total_entries = collection.total_entries if collection.respond_to?('total_entries')
 
 # fallback to 1 page if total entries count not found
 total_entries = current_page_entries if total_entries.nil?
