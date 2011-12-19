@@ -75,6 +75,18 @@ By default "starts_with" is used due to database performance reasons.
 
 Independent fields search will always search using "starts_with" finder.
 
+== Custom pagination implementations
+
+If you are getting strange results (for instance, iTotalRecords and iTotalDisplayRecords both equal 0, or entirely the wrong collection is used), you might want to specify which collection to use:
+
+  respond_with @products, :locals => {:collection => @products}
+
+Also if you are using own or uncommon implementation of pagination you may use direct page count variables setting as follows:
+
+  respond_with @products, :locals => {:total_entries => 12, :current_page_entries => 10}
+
+In this case gem will not try to find collection or pagination and will use the counters passed via locals.
+
 == Example
 
 The following code will show products list datatables. Manufacturer is belongs_to association for Product.
@@ -88,10 +100,6 @@ In your controller:
     @products = Product.search(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page])
     respond_with @products
   end
-
-If you are getting strange results (for instance, iTotalRecords and iTotalDisplayRecords both equal 0, or entirely the wrong collection is used), you might want to specify which collection to use:
-
-  respond_with @products, :locals => {:collection => @products}
 
 In your search view (app/views/products/search.jsonify):
 
