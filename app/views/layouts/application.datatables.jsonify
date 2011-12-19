@@ -2,31 +2,32 @@ total_entries ||= nil
 current_page_entries ||= 0
 collection ||= nil
 
-# looking for the right collection if not initiated via parameter
+# Looking for object with pagination if pages count not set
+if total_entries.nil? and current_page_entries==0
 
-if collection.nil?
-  instance_variables.each do |vn|
-
-    v = instance_variable_get(vn)
+  # looking for the right collection if not initiated via parameter
+  if collection.nil?
+    instance_variables.each do |vn|
+      v = instance_variable_get(vn)
   
-    # if a collection variable was specified, use it only
-    next if collection && collection != v
-    next if v.class.name.nil?
+      # if a collection variable was specified, use it only
+      next if collection && collection != v
+      next if v.class.name.nil?
 
-    collection = v if v.class.name.start_with?("MetaSearch::Searches", "ActiveRecord::Relation")
-
+      collection = v if v.class.name.start_with?("MetaSearch::Searches", "ActiveRecord::Relation", "Mongoid::Criteria")
+    end
   end
+
+  # receiving correct current page entries count
+  current_page_entries = collection.size if collection.respond_to?('size')
+
+  # looking for the total entries count
+  total_entries = collection.length if collection.class.name.start_with?("Mongoid::Criteria")
+  total_entries = collection.total_entries if collection.respond_to?('total_entries')
+
+  # fallback to 1 page if total entries count not found
+  total_entries = current_page_entries if total_entries.nil?
 end
-
-# receiving correct current page entries count
-current_page_entries = collection.size if collection.respond_to?('size')
-
-# looking for the total entries count
-total_entries = collection.length if collection.class.name.start_with?("Mongoid::Criteria")
-total_entries = collection.total_entries if collection.respond_to?('total_entries')
-
-# fallback to 1 page if total entries count not found
-total_entries = current_page_entries if total_entries.nil?
 
 json.iTotalRecords current_page_entries
 json.iTotalDisplayRecords total_entries
