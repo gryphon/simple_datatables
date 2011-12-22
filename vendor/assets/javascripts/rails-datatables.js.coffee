@@ -5,7 +5,7 @@
 
 root = exports ? this
   
-root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
+root.railsDatatables = ( sSource, aoData, fnCallback ) ->
       
   columns = [];
   searchcolumns = [];
