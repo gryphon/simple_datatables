@@ -8,11 +8,11 @@ Connects two awesome plugins - Datatables for Jquery and Meta Search together fo
 
 Add the following to your Gemfile to install simple datatables:
 
-  gem 'simple_datatables'
+  gem 'rails-datatables'
 
 After bundle install add this line to rails 3.1 assets pipeline and restart server:
 
-  //= require simple_datatables
+  //= require rails-datatables
 
 Installation completed.
 
@@ -50,6 +50,7 @@ This gem uses:
 
 This gem provides integration with:
 * will_paginate for nice pagination request syntax mapping
+* kaminari for pagination as well it works with both so choose either one not both.
 
 Gem works only with rails 3.1.
 
@@ -57,7 +58,7 @@ Gem includes datatables library and fnSetFilteringDelay plugin so you haven't in
 
 == Pagination
 
-Simple_datatables is compatible with Kaminari. Datatables will provide you "page" and "per_page" request params.
+Rails-Datatables is compatible with Kaminari AND Will paginate. Datatables will provide you "page" and "per_page" request params.
 
 If you do not use pagination do not forget to save search result to some variable with meta_search relation method:
 
