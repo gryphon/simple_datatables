@@ -2,7 +2,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "rails_datatables/version"
 
 Gem::Specification.new do |s|
-  s.name        = "rails-datatables"
+  s.name        = "rails_datatables"
   s.version     = RailsDatatables::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Grigory", "Zack"]
