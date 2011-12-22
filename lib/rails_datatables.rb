@@ -2,8 +2,8 @@ require 'rails'
 
 Mime::Type.register "application/json", :datatables
 
-module SimpleDatatables
+module RailsDatatables
   module Rails
-    require 'simple_datatables/engine'
+    require 'rails_datatables/engine'
   end
 end

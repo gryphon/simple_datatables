@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    simple_datatables (0.1)
+    rails-datatables (0.1)
       meta_search
       rails (~> 3.1.0.rc5)
       will_paginate (~> 3.0.pre2)
