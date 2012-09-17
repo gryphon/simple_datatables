@@ -55,7 +55,6 @@ root.simpleDatatables = ( sSource, aoData, fnCallback ) ->
     search_regexp = ///sSortDir_([0-9]+)///
     if (col = dataObj.name.match(search_regexp)) and dataObj.value
       sortcolumns[col[1]]=sortcolumns[col[1]]+"."+dataObj.value;
-
   );
 
   data.push({name: "sEcho", value: sEcho});

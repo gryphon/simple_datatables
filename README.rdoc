@@ -1,6 +1,6 @@
 = Simple Datatables
 
-Connects two awesome plugins - Datatables for Jquery and Meta Search together for Rails 3.1
+Connects two awesome plugins - Datatables for Jquery and Meta Search together for Rails 3
 
 == Install
 
@@ -8,7 +8,7 @@ Add the following to your Gemfile to install simple datatables:
 
   gem 'simple_datatables'
 
-After bundle install add this line to rails 3.1 assets pipeline and restart server:
+After bundle install add this line to rails assets pipeline and restart server:
 
   //= require simple_datatables
 
@@ -49,7 +49,7 @@ This gem uses:
 This gem provides integration with:
 * will_paginate for nice pagination request syntax mapping
 
-Gem works only with rails 3.1.
+Gem works only with rails 3.1 and higher.
 
 Gem includes datatables library and fnSetFilteringDelay plugin so you haven't include it by yourself.
 
@@ -79,19 +79,30 @@ Independent fields search will always search using "starts_with" finder.
 
 If you are getting strange results (for instance, iTotalRecords and iTotalDisplayRecords both equal 0, or entirely the wrong collection is used), you might want to specify which collection to use:
 
-  respond_with @products, :locals => {:collection => @products}
+  @collection = @products
+  respond_with @products
 
 Also if you are using own or uncommon implementation of pagination you may use direct page count variables setting as follows:
 
-  respond_with @products, :locals => {:total_entries => 12, :current_page_entries => 10}
+  @total_entries = 12
+  @current_page_entries = 10
+  respond_with @products
 
-In this case gem will not try to find collection or pagination and will use the counters passed via locals.
+In this case gem will not try to find collection or pagination and will use the counters passed via variables.
 
 == Example
 
 The following code will show products list datatables. Manufacturer is belongs_to association for Product.
 
-In your controller:
+First of all add to your routes.rb datatables search api method:
+
+  resources :products do
+    collection do
+      get :search
+    end
+  end
+
+Then implement it in your controller:
 
   respond_to :html, :datatables
   
@@ -101,13 +112,13 @@ In your controller:
     respond_with @products
   end
 
-In your search view (app/views/products/search.jsonify):
+In your search view (app/views/products/search.jsonify) implement output fields order:
 
   @products.each do |product|
     json << [product.name, product.manufacturer.name]
   end
 
-In your index view:
+In your index view make a table with header:
 
   %table#products
     %thead
@@ -117,8 +128,7 @@ In your index view:
   
     %tbody
 
-
-In your javascript:
+In your javascript add the following code to initialize the datatables (be sure to do it after document load):
 
   $("#products").dataTable({
       "sAjaxSource"     : "/products/search.datatables",
@@ -133,4 +143,4 @@ In your javascript:
 
 == Copyright
 
-Copyright (c) Grigory Dmitrenko, 2011. See LICENSE for details.
+Copyright (c) Grigory Dmitrenko, 2012. See LICENSE for details.
