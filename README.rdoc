@@ -40,26 +40,32 @@ Use standard datatables initializer options for creating table:
 * fnServerData: point to simpleDatatables function
 * aoColumns: you *should* define all searchable/fiterable sName attributes here. Use format as used in meta_search (with underscores) 
 
-Create Jsonify view with column values for columns listed in aoColumns. See example for clarification.
+Create Jsonify view with column values for columns listed in aoColumns. View should be written in Jsonify style and should have *.jsonify file extension in order to work properly. See example and Jsonify docs for more details.
+
+== Dependencies
 
 This gem uses:
 * meta_search for nice search and sort request syntax mapping
 * jsonify for simple output generation 
 
 This gem provides integration with:
-* will_paginate for nice pagination request syntax mapping
+* will_paginate for nice pagination request syntax mapping (not bundled)
 
 Gem works only with rails 3.1 and higher.
 
 Gem includes datatables library and fnSetFilteringDelay plugin so you haven't include it by yourself.
 
+Gem does not include any CSS files. Please use styles from datatables website examples.
+
 == Pagination
 
-Simple_datatables is compatible with will_paginate. Datatables will provide you "page" and "per_page" request params.
+Simple_datatables is compatible with will_paginate. In order to provide choise freedom you should add will_paginate to your project by yourself. Datatables will provide you "page" and "per_page" request params.
 
 If you do not use pagination do not forget to save search result to some variable with meta_search relation method:
 
   @products = Product.search(params[:search]).relation
+
+Your can use any other paginator. See below for the details.
 
 == Search for all fields
 
@@ -118,7 +124,7 @@ In your search view (app/views/products/search.jsonify) implement output fields 
     json << [product.name, product.manufacturer.name]
   end
 
-In your index view make a table with header:
+In your index view make a table with header (HAML):
 
   %table#products
     %thead
