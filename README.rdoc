@@ -12,7 +12,7 @@ Add the following to your Gemfile to install simple datatables:
 
 After bundle install add this line to rails 3.1 assets pipeline and restart server:
 
-  //= require rails-datatables
+  //= require rails_datatables
 
 Installation completed.
 
