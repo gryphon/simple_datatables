@@ -1,6 +1,6 @@
 require 'rails'
 
-Mime::Type.register "application/json", :datatables
+Mime::Type.register_alias "application/json", :datatables
 
 module SimpleDatatables
   module Rails
